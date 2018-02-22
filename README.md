@@ -22,7 +22,9 @@ anyway, the Goals:
   I dont want myself or users to be dependent
   on the crypto part of this program. Maybe it
   has bugs, or something. Maybe the keystrokes
-  in the pasword asking phase get logged.
+  in the pasword asking phase get logged. On the 
+  other hand, they are 'naked' xml files ready 
+  for copying.
 * Be able to specify the password on the 
   commandline. I know it's insecure becuause
   it ends up in your bash history file. But one
