@@ -9,7 +9,7 @@ do that. I'm not sure if merging databases in
 general is actually a good idea, but 
 anyway, the Goals:
 
-* kdbxmere a.kdbx b.kdbx c.kdbx target.kdbx
+* kdbxmerge a.kdbx b.kdbx c.kdbx target.kdbx
   
   this would create a new target.kdbx file.
   
