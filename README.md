@@ -11,7 +11,8 @@ anyway, the Goals:
 
 * kdbxmerge a.kdbx b.kdbx c.kdbx target.kdbx
   
-  this would create a new target.kdbx file.
+  this would create a new target.kdbx file. *the 
+  source files become root folders in the target.*
   
   To do this, it would need to ask the password
   of the existing kdbx files, and twice for
