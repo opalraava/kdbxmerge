@@ -6,7 +6,7 @@ AC_CONFIG_HEADERS(config.h)
 
 AC_PROG_CXX
 AC_LANG([C++])
-AX_CXX_COMPILE_STDCXX_11
+AX_CXX_COMPILE_STDCXX_17
 
 AX_BOOST_BASE([],, [AC_MSG_ERROR([kdbxmerge needs Boost, but it was not found])])
 AX_BOOST_SYSTEM
