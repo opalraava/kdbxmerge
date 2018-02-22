@@ -31,3 +31,10 @@ anyway, the Goals:
   can use it for automated testing, things like that.
 * There are things like key files, but I have no idea
   if it's worth supporting that.
+* kdbxmerge myfile.kdbx target.kdbx
+
+  one inputfile MUST work
+  
+  the idea is to 'add' each argument on the list to the target
+  structure, and if there is only one of such thing, it should
+  still work. also its nice to convert to/from xml on the commandline.
