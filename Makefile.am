@@ -1,0 +1,8 @@
+AUTOMAKE_OPTIONS = foreign
+ACLOCAL_AMFLAGS = -I m4
+
+AM_CPPFLAGS = ${BOOST_CPPFLAGS} 
+AM_LDFLAGS = ${BOOST_LDFLAGS}
+bin_PROGRAMS = kdbxmerge
+kdbxmerge_SOURCES = kdbxmerge.cc
+kdbxmerge_LDADD = ${BOOST_SYSTEM_LIB} 
