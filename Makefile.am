@@ -1,4 +1,4 @@
 AUTOMAKE_OPTIONS = foreign
 
-bin_PROGRAMS = kbdxmerge
-kbdxmerge_SOURCES = kbdxmerge.c
+bin_PROGRAMS = kdbxmerge
+kdbxmerge_SOURCES = kdbxmerge.c tools_passwd.c
