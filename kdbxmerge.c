@@ -65,6 +65,13 @@ main(int argc, char* argv[])
 	  usage(EXIT_FAILURE);
 	}
     }
+
+  if (argc == optind)
+    {
+      printf("kdbxmerge: missing file operands\n");
+      printf("Try 'kdbxmerge --help' for more information.\n");
+      exit(EXIT_FAILURE);
+    }
   
   return 0;
 }
