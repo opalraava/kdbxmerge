@@ -12,7 +12,7 @@
 static struct option const long_options[] =
   {
     {"help",no_argument,NULL,'h'},
-    {"version",no_argument,NULL, 'v'},
+    {"version",no_argument,NULL, 'V'},
     {NULL,0,NULL,0}
   };
 
@@ -28,7 +28,7 @@ usage(int status)
   printf("kdbxmerge [OPTION]... SOURCE... DEST\n\n");
 
   printf("  -h, --help     display this help and exit\n");
-  printf("  -v, --version  output version information and exit\n");
+  printf("  -V, --version  output version information and exit\n");
   
   exit(status);
 }
@@ -53,11 +53,11 @@ main(int argc, char* argv[])
   
   kdbxmerge_options_init(&x);
 
-  while ((c = getopt_long(argc,argv,"hv",long_options, NULL)) != -1)
+  while ((c = getopt_long(argc,argv,"hV",long_options, NULL)) != -1)
     {
       switch (c)
 	{
-	case 'v':
+	case 'V':
 	  version(0);
 	case 'h':
 	  usage(EXIT_SUCCESS);
@@ -66,7 +66,7 @@ main(int argc, char* argv[])
 	}
     }
 
-  if (argc == optind)
+  if (argc - optind <= 1)
     {
       printf("kdbxmerge: missing file operands\n");
       printf("Try 'kdbxmerge --help' for more information.\n");
