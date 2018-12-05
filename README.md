@@ -1,6 +1,10 @@
 kdbxmerge
 =========
 
+Using ax_have_qt.m4 is here
+https://www.gnu.org/software/autoconf-archive/ax_have_qt.html
+
+
 I've not found an option yet in keepass clients
 to merge two keepass databases, .kdbx files.
 
