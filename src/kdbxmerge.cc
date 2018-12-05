@@ -59,10 +59,13 @@ main(int argc, char* argv[])
 	{
 	case 'V':
 	  version(0);
+	  return 0;
 	case 'h':
 	  usage(EXIT_SUCCESS);
+	  return 0;
 	default:
 	  usage(EXIT_FAILURE);
+	  return 0;
 	}
     }
 
@@ -72,6 +75,8 @@ main(int argc, char* argv[])
       printf("Try 'kdbxmerge --help' for more information.\n");
       exit(EXIT_FAILURE);
     }
+
+  
   
   return 0;
 }
