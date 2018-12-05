@@ -1,5 +1,5 @@
-AM_CPPFLAGS = ${QT_CXXFLAGS}
-AM_LDFLAGS  = ${QT_LIBS}
+AM_CPPFLAGS = ${QT_CXXFLAGS} ${GCRYPT_CFLAGS}
+AM_LDFLAGS  = ${QT_LIBS} ${GCRYPT_LIBS}
 
 AUTOMAKE_OPTIONS=subdir-objects
 
@@ -95,11 +95,28 @@ streams/StoreDataStream.h \
 streams/SymmetricCipherStream.cpp \
 streams/SymmetricCipherStream.h \
 streams/qtiocompressor.cpp \
-streams/qtiocompressor.h 
+streams/qtiocompressor.h \
+autotype/WindowSelectComboBox.h \
+autotype/WindowSelectComboBox.cpp \
+autotype/WildcardMatcher.h \
+autotype/WildcardMatcher.cpp \
+autotype/ShortcutWidget.h \
+autotype/ShortcutWidget.cpp \
+autotype/AutoTypePlatformPlugin.h \
+autotype/AutoTypeAction.h \
+autotype/AutoTypeAction.cpp 
+
+
 
 # crypto/SymmetricCipherSalsa20.cpp 
 # crypto/SymmetricCipherSalsa20.h 
 # streams/QtIOCompressor 
+# autotype/AutoTypeSelectView.h 
+# autotype/AutoTypeSelectView.cpp 
+# autotype/AutoTypeSelectDialog.h 
+# autotype/AutoTypeSelectDialog.cpp 
+# autotype/AutoType.h 
+# autotype/AutoType.cpp 
 
 
 

@@ -9,6 +9,7 @@ AC_PROG_CXX
 
 AX_HAVE_QT
 AX_CHECK_ZLIB
+AX_LIB_GCRYPT([yes])
 
 AC_CONFIG_FILES(Makefile src/Makefile)
 AC_OUTPUT
