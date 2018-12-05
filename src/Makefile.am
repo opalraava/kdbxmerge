@@ -1,6 +1,7 @@
 AM_CPPFLAGS = ${QT_CXXFLAGS}
 AM_LDFLAGS  = ${QT_LIBS}
 
+AUTOMAKE_OPTIONS=subdir-objects
 
 keepassx_sources = \
 core/AutoTypeAssociations.cpp \
@@ -59,8 +60,6 @@ crypto/SymmetricCipher.h \
 crypto/SymmetricCipherBackend.h \
 crypto/SymmetricCipherGcrypt.cpp \
 crypto/SymmetricCipherGcrypt.h \
-crypto/SymmetricCipherSalsa20.cpp \
-crypto/SymmetricCipherSalsa20.h \
 format/CsvExporter.cpp \
 format/CsvExporter.h \
 format/KeePass1.h \
@@ -86,8 +85,21 @@ keys/FileKey.cpp \
 keys/FileKey.h \
 keys/Key.h \
 keys/PasswordKey.cpp \
-keys/PasswordKey.h 
+keys/PasswordKey.h \
+streams/HashedBlockStream.cpp \
+streams/HashedBlockStream.h \
+streams/LayeredStream.cpp \
+streams/LayeredStream.h \
+streams/StoreDataStream.cpp \
+streams/StoreDataStream.h \
+streams/SymmetricCipherStream.cpp \
+streams/SymmetricCipherStream.h \
+streams/qtiocompressor.cpp \
+streams/qtiocompressor.h 
 
+# crypto/SymmetricCipherSalsa20.cpp 
+# crypto/SymmetricCipherSalsa20.h 
+# streams/QtIOCompressor 
 
 
 
