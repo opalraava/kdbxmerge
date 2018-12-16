@@ -116,15 +116,20 @@ core/InactivityTimer_moc.cpp \
 core/Group_moc.cpp \
 core/EntryAttributes_moc.cpp
 
-
 clean-local :
 	-rm -f ${moc_sources}
 
 
+noinst_LIBRARIES = libkeepassxio.a
+libkeepassxio_a_SOURCES = ${keepassx_sources} ${moc_sources}
+
+
 bin_PROGRAMS = kdbxmerge kdbxextract
 kdbxmerge_SOURCES = kdbxmerge.h kdbxmerge.cc tools_passwd.h tools_passwd.c
+kdbxmerge_LDADD = libkeepassxio.a
+kdbxextract_SOURCES = kdbx-extract.cpp
+kdbxextract_LDADD = libkeepassxio.a
 
-kdbxextract_SOURCES =  ${keepassx_sources} ${moc_sources} kdbx-extract.cpp
 
 
 streams/HashedBlockStream_moc.cpp : streams/HashedBlockStream.h

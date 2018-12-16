@@ -9,6 +9,21 @@
 
 #include <getopt.h>
 
+#include <vector>
+#include <string>
+#include <iostream>
+
+#include <QCoreApplication>
+#include "crypto/Crypto.h"
+#include "core/Database.h"
+
+
+
+
+
+
+
+
 static struct option const long_options[] =
   {
     {"help",no_argument,NULL,'h'},
@@ -29,6 +44,12 @@ usage(int status)
 
   printf("  -h, --help     display this help and exit\n");
   printf("  -V, --version  output version information and exit\n");
+
+  printf("\n");
+  printf("Use this program to merge several ,kdbx databases into\n");
+  printf("a new single one. The last aargument is a newly created\n");
+  printf(".kdbx database with the contents of the others in subgroups of root\n");
+  printf("\n");
   
   exit(status);
 }
@@ -53,6 +74,12 @@ main(int argc, char* argv[])
   
   kdbxmerge_options_init(&x);
 
+  QCoreApplication app(argc, argv);
+  if (!Crypto::init()) {
+    qFatal("Fatal error while testing the cryptographic functions:\n%s",
+	   qPrintable(Crypto::errorString()));
+  }
+
   while ((c = getopt_long(argc,argv,"hV",long_options, NULL)) != -1)
     {
       switch (c)
@@ -76,7 +103,20 @@ main(int argc, char* argv[])
       exit(EXIT_FAILURE);
     }
 
+
+  Database* db = new Database();
+  std::string prompt;
+
+  for (int i = optind; i < argc-1; i++)
+    {
+      prompt = std::string("Enter passphrase for ") + argv[i] + ": ";
+      char* key = NULL;
+      int retval = tools_get_key_tty(prompt.c_str(),&key,0,0);
+    }
   
-  
+  prompt = std::string("Enter new passphrase for ") + argv[argc-1] + ": ";
+  char* output_key = NULL;
+  int retval = tools_get_key_tty(prompt.c_str(),&output_key,0,1);
+
   return 0;
 }
