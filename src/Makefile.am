@@ -1,3 +1,6 @@
+EXTRA_DIST = config-keepassx.h  config-keepassx.h.cmake streams/QtIOCompressor
+
+
 AM_CPPFLAGS = ${QT_CXXFLAGS} ${GCRYPT_CFLAGS}
 AM_LDFLAGS  = ${QT_LIBS} ${GCRYPT_LIBS}
 
