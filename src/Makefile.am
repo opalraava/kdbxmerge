@@ -119,6 +119,8 @@ core/InactivityTimer_moc.cpp \
 core/Group_moc.cpp \
 core/EntryAttributes_moc.cpp
 
+BUILT_SOURCES = ${moc_sources}
+
 clean-local :
 	-rm -f ${moc_sources}
 
