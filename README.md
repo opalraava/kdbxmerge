@@ -1,6 +1,6 @@
 kdbxmerge
 =========
-Keepassx2 is an awesome password manager, that I use every day. I'm using Qubes OS, which has a seperate VM for it.
+[Keepassx2](https://github.com/keepassx/keepassx) is an awesome password manager, that I use every day. I'm using Qubes OS, which has a seperate VM for it.
 
 I started evaluating the source code of keepassx2, and it's very well written, you can take only the parts that manage the database i/o, structure and it's contents, and seperate it completely from the gui stuff.
 
