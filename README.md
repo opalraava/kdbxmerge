@@ -1,45 +1,11 @@
 kdbxmerge
 =========
+[Keepassx2](https://github.com/keepassx/keepassx) is an awesome password manager, that I use every day. I'm using Qubes OS, which has a seperate VM for it.
 
-Using ax_have_qt.m4 is here
-https://www.gnu.org/software/autoconf-archive/ax_have_qt.html
+I started evaluating the source code of keepassx2, and it's very well written, you can take only the parts that manage the database i/o, structure and it's contents, and seperate it completely from the gui stuff.
 
+This is what I wanted to do for a while now, to make commandline programs that manage the .kdbx password files. Specifically I wanted to be able to merge two .kdbx files.
 
-I've not found an option yet in keepass clients
-to merge two keepass databases, .kdbx files.
-
-This tool, once it's finished, will aim to 
-do that. I'm not sure if merging databases in 
-general is actually a good idea, but 
-anyway, the Goals:
-
-* kdbxmerge a.kdbx b.kdbx c.kdbx target.kdbx
-  
-  this would create a new target.kdbx file. *the 
-  source files become root folders in the target.*
-  
-  To do this, it would need to ask the password
-  of the existing kdbx files, and twice for
-  a password for the new one.
-* Also support .xml exports from the windows
-  keepass client. And being abe to write these
-  .xml files. I want to support this, because
-  I dont want myself or users to be dependent
-  on the crypto part of this program. Maybe it
-  has bugs, or something. Maybe the keystrokes
-  in the pasword asking phase get logged. On the 
-  other hand, they are 'naked' xml files ready 
-  for copying.
-* Be able to specify the password on the 
-  commandline. I know it's insecure becuause
-  it ends up in your bash history file. But one
-  can use it for automated testing, things like that.
-* There are things like key files, but I have no idea
-  if it's worth supporting that.
-* kdbxmerge myfile.kdbx target.kdbx
-
-  one inputfile MUST work
-  
-  the idea is to 'add' each argument on the list to the target
-  structure, and if there is only one of such thing, it should
-  still work. also its nice to convert to/from xml on the commandline.
+So what this repo provides is:
+* a static library libkeepassio.a, that contains all the Keepassx2 database stuff.
+* and a few commandline tools that work with these .kdbx files.
