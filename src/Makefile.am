@@ -131,7 +131,7 @@ libkeepassxio_a_SOURCES = ${keepassx_sources} ${moc_sources}
 
 
 bin_PROGRAMS = kdbxmerge
-kdbxmerge_SOURCES = kdbxmerge.h kdbxmerge.cc tools_passwd.h tools_passwd.c
+kdbxmerge_SOURCES = kdbxmerge.h kdbxmerge.cc askpass_tty.h askpass_tty.c
 kdbxmerge_LDADD = libkeepassxio.a
 
 noinst_PROGRAMS = kdbxextract

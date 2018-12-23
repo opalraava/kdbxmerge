@@ -1,6 +1,6 @@
 #include <config.h>
 
-#include "tools_passwd.h"
+#include "askpass_tty.h"
 #include "kdbxmerge.h"
 
 #include <stdio.h>
@@ -113,12 +113,12 @@ main(int argc, char* argv[])
     {
       prompt = std::string("Enter passphrase for ") + input_filename + ": ";
       char* key = NULL;
-      int retval = tools_get_key_tty(prompt.c_str(),&key,0,0);
+      int retval = askpass_tty(prompt.c_str(),&key,0,0);
     }
 
   prompt = std::string("Enter new passphrase for ") + output_filename + ": ";
   char* output_key = NULL;
-  int retval = tools_get_key_tty(prompt.c_str(),&output_key,0,1);
+  int retval = askpass_tty(prompt.c_str(),&output_key,0,1);
 
   return 0;
 }

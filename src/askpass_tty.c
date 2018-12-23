@@ -1,4 +1,4 @@
-#include "tools_passwd.h"
+#include "askpass_tty.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -42,9 +42,9 @@ static int timed_read(int fd, char* pass, size_t maxlen, long timeout);
 
 
 int
-tools_get_key_tty(const char* prompt, char** key, int timeout, int verify)
+askpass_tty(const char* prompt, char** key, int timeout, int verify)
 {
-  const int key_size_max = TOOLS_PASSWORD_SIZE_MAX;
+  const int key_size_max = ASKPASS_TTY_PASSWORD_SIZE_MAX;
   char* pass = NULL;
 
   /* making this NULL ensures we can always free() it. */
