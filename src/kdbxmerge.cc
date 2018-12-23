@@ -15,7 +15,6 @@
 
 #include <QCoreApplication>
 #include "crypto/Crypto.h"
-#include "core/Database.h"
 
 
 
@@ -46,9 +45,9 @@ usage(int status)
   printf("  -V, --version  output version information and exit\n");
 
   printf("\n");
-  printf("Use this program to merge several ,kdbx databases into\n");
-  printf("a new single one. The last aargument is a newly created\n");
-  printf(".kdbx database with the contents of the others in subgroups of root\n");
+  printf("Use this program to merge several KeePass .kdbx databases into a new,\n");
+  printf("nonexistent single one. The last argument is a newly created .kdbx\n");
+  printf("database with the contents of the others in subgroups of the root node\n");
   printf("\n");
   
   exit(status);
@@ -75,6 +74,7 @@ main(int argc, char* argv[])
   kdbxmerge_options_init(&x);
 
   QCoreApplication app(argc, argv);
+  
   if (!Crypto::init()) {
     qFatal("Fatal error while testing the cryptographic functions:\n%s",
 	   qPrintable(Crypto::errorString()));
@@ -104,17 +104,19 @@ main(int argc, char* argv[])
     }
 
 
-  Database* db = new Database();
-  std::string prompt;
 
-  for (int i = optind; i < argc-1; i++)
+  std::vector<std::string> input_filenames(argv + optind, argv + argc - 1);
+  std::string output_filename = argv[argc - 1];
+  
+  std::string prompt;
+  for (auto input_filename : input_filenames)
     {
-      prompt = std::string("Enter passphrase for ") + argv[i] + ": ";
+      prompt = std::string("Enter passphrase for ") + input_filename + ": ";
       char* key = NULL;
       int retval = tools_get_key_tty(prompt.c_str(),&key,0,0);
     }
-  
-  prompt = std::string("Enter new passphrase for ") + argv[argc-1] + ": ";
+
+  prompt = std::string("Enter new passphrase for ") + output_filename + ": ";
   char* output_key = NULL;
   int retval = tools_get_key_tty(prompt.c_str(),&output_key,0,1);
 

@@ -129,9 +129,11 @@ noinst_LIBRARIES = libkeepassxio.a
 libkeepassxio_a_SOURCES = ${keepassx_sources} ${moc_sources}
 
 
-bin_PROGRAMS = kdbxmerge kdbxextract
+bin_PROGRAMS = kdbxmerge
 kdbxmerge_SOURCES = kdbxmerge.h kdbxmerge.cc tools_passwd.h tools_passwd.c
 kdbxmerge_LDADD = libkeepassxio.a
+
+noinst_PROGRAMS = kdbxextract
 kdbxextract_SOURCES = kdbx-extract.cpp
 kdbxextract_LDADD = libkeepassxio.a
 
