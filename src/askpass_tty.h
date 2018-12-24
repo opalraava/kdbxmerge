@@ -36,9 +36,9 @@ extern "C" {
 #define ASKPASS_TTY_VERIFY_DOESNT_MATCH 3
   
   int askpass_tty(const char* prompt, char** key, int timeout, int verify);
-  
+
 #ifdef __cplusplus
 }
 #endif
-#endif
 
+#endif
