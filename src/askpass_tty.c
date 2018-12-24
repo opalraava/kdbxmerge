@@ -1,7 +1,6 @@
 #include "askpass_tty.h"
 
 #include <stdlib.h>
-#include <string.h>
 #include <errno.h>
 
 #include <termios.h>
@@ -12,6 +11,8 @@
 #include <sys/select.h>
 #include <fcntl.h>
 #include <unistd.h>
+
+#define burn(p,len) (memset((p), '\0', (len)))
 
 static int interactive_pass(const char* prompt, char* pass, size_t maxlen, int timeout);
 static int untimed_read(int fd, char* pass, size_t maxlen);
@@ -40,12 +41,12 @@ static int timed_read(int fd, char* pass, size_t maxlen, long timeout);
  * - I don't use password quality checking in any way.
  */
 
-
 int
 askpass_tty(const char* prompt, char** key, int timeout, int verify)
 {
   const int key_size_max = ASKPASS_TTY_PASSWORD_SIZE_MAX;
   char* pass = NULL;
+  int retval;
 
   /* making this NULL ensures we can always free() it. */
   *key = NULL;
@@ -54,10 +55,12 @@ askpass_tty(const char* prompt, char** key, int timeout, int verify)
   if (!pass)
     return -ENOMEM;
 
-  if (interactive_pass(prompt ? prompt : "Enter passphrase: ", pass, key_size_max, timeout)) {
+  if ((retval = interactive_pass(prompt ? prompt : "Enter passphrase: ", pass, key_size_max+1, timeout)) < 0) {
+    burn(pass, key_size_max+1);
     free(pass);
-    return -EINVAL;
+    return ASKPASS_TTY_IO_ERROR;
   }
+  if (retval > 0) { burn(pass,key_size_max+1); free(pass); return retval; }
 
   pass[key_size_max] = '\0';	/* see notes */
 
@@ -65,25 +68,40 @@ askpass_tty(const char* prompt, char** key, int timeout, int verify)
     {
       char* pass_verify = malloc(key_size_max);
       if (!pass_verify) {
+	burn(pass, key_size_max+1);
 	free(pass);
 	return -ENOMEM;
       }
 
-      if (interactive_pass("Verify passphrase: ",
-			   pass_verify, key_size_max, timeout))
+      
+      if ((retval = interactive_pass("Verify passphrase: ",
+				     pass_verify, key_size_max, timeout)) < 0)
 	{
+	  burn(pass, key_size_max+1);
+	  burn(pass_verify, key_size_max);
 	  free(pass);
 	  free(pass_verify);
-	  return -EINVAL;
+	  return ASKPASS_TTY_IO_ERROR;
+	}
+	if (retval > 0) {
+	  burn(pass, key_size_max+1);
+	  burn(pass_verify, key_size_max);
+	  free(pass);
+	  free(pass_verify);
+	  return retval;
 	}
 
+	
       if (strncmp(pass, pass_verify, key_size_max)) {
+	burn(pass, key_size_max+1);
+	burn(pass_verify, key_size_max);
 	free(pass);
 	free(pass_verify);
-	return -EPERM;		/* see notes */
+	return ASKPASS_TTY_VERIFY_DOESNT_MATCH;		/* see notes */
       }
 
-      free(pass_verify);	/* not burning it, perhaps bzero() */
+      burn(pass_verify, key_size_max);      
+      free(pass_verify);
     }
   
   *key = pass;
@@ -122,10 +140,12 @@ interactive_pass(const char* prompt, char* pass, size_t maxlen, int timeout)
     err = untimed_read(fd, pass, maxlen);
   tcsetattr(fd, TCSAFLUSH, &orig);
   
-  if (err) { close(fd); return -1; }
+  if (err < 0) { close(fd); return -1; }
+  if (err > 0) { close(fd); return err; }
   
-  write(fd, "\n", 1);
-  close(fd);
+  if (write(fd, "\n", 1) < 0) { close(fd); return -1; }
+  
+  if (close(fd) < 0) { return -1; }
   return 0;
 }
 
@@ -138,7 +158,7 @@ untimed_read(int fd, char* pass, size_t maxlen)
 
   i = read(fd, pass, maxlen);
   if (i < 0) return -1;
-  if (i == 0) return -1; 	/* indicates EOF */
+  if (i == 0) return -1; 	/* indicates EOF. We're not happy with this because that is errno set to? */
   
   pass[i-1] = '\0';
   return 0;
@@ -149,14 +169,17 @@ timed_read(int fd, char* pass, size_t maxlen, long timeout)
 {
   struct timeval t;
   fd_set fds;
+  int retval;
 
   FD_ZERO(&fds);
   FD_SET(fd,&fds);
   t.tv_sec = timeout;
   t.tv_usec = 0;
 
-  if (select(fd+1, &fds, NULL, NULL, &t) <= 0)
+  if ((retval = select(fd+1, &fds, NULL, NULL, &t)) < 0)
     return -1;
+  if (retval == 0)
+    return ASKPASS_TTY_INPUT_TIMEOUT;
 
   return untimed_read(fd,pass,maxlen);
 }

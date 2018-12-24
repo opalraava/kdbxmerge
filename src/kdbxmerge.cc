@@ -1,6 +1,5 @@
 #include <config.h>
 
-#include "askpass_tty.h"
 #include "kdbxmerge.h"
 
 #include <stdio.h>
@@ -9,17 +8,8 @@
 
 #include <getopt.h>
 
-#include <vector>
-#include <string>
-#include <iostream>
-
 #include <QCoreApplication>
 #include "crypto/Crypto.h"
-
-
-
-
-
 
 
 
@@ -103,22 +93,8 @@ main(int argc, char* argv[])
       exit(EXIT_FAILURE);
     }
 
-
-
   std::vector<std::string> input_filenames(argv + optind, argv + argc - 1);
   std::string output_filename = argv[argc - 1];
-  
-  std::string prompt;
-  for (auto input_filename : input_filenames)
-    {
-      prompt = std::string("Enter passphrase for ") + input_filename + ": ";
-      char* key = NULL;
-      int retval = askpass_tty(prompt.c_str(),&key,0,0);
-    }
 
-  prompt = std::string("Enter new passphrase for ") + output_filename + ": ";
-  char* output_key = NULL;
-  int retval = askpass_tty(prompt.c_str(),&output_key,0,1);
-
-  return 0;
+  return main_do_merge(input_filenames, output_filename, &x);
 }
