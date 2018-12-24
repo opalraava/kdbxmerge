@@ -25,7 +25,7 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
   if (std::ifstream(output_filename.c_str()).good())
     {
       std::cout << "kdbxmerge: error: output file "
-		<< output_filename << " does exist. Not overwriting existing file.\n";
+		<< output_filename << " exists. Not overwriting existing file.\n";
       exit(EXIT_FAILURE);
     }
   

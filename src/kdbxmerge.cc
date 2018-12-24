@@ -37,7 +37,7 @@ usage(int status)
   printf("\n");
   printf("Use this program to merge several KeePass .kdbx databases into a new,\n");
   printf("nonexistent single one. The last argument is a newly created .kdbx\n");
-  printf("database with the contents of the others in subgroups of the root node\n");
+  printf("database with the contents of the others in subgroups of the root node.\n");
   printf("\n");
   
   exit(status);
