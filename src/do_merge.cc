@@ -69,7 +69,7 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
       
       CompositeKey key;
       PasswordKey password;
-      char* pass = askpass(std::string("Enter passphrase for ") + name + ": ");
+      char* pass = askpass(std::string("Enter passphrase for ") + name + ": "); // should try-catch
       password.setPassword(pass);
       key.addKey(password);
       burn(pass,strlen(pass));
@@ -79,6 +79,11 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
       Database* db = reader.readDatabase(&db_file,key);
 
       if (reader.hasError()) {
+	QByteArray ba = reader.errorString().toLocal8Bit();
+	const char* s = ba.data();
+	
+	std::cout << "kdbxmerge: error reading from "
+		  << name << ": " << s << std::endl;
 	delete db;
 	delete output;
 	return EXIT_FAILURE;
@@ -91,7 +96,17 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
   // Write output database
   CompositeKey key;
   PasswordKey password;
-  char* pass = askpass(std::string("Enter new passphrase for ") + output_filename + ": ",true);
+  
+  char* pass;
+  try {
+    pass = askpass(std::string("Enter new passphrase for ") + output_filename + ": ",true);
+  } catch (int err) {
+    delete output;
+    if (err < 0) { std::cout << "kdbxmerge: out of memory\n"; return EXIT_FAILURE; }
+    if (err == 2) { std::cout << "kdbxmerge: i/o error with tty\n"; return EXIT_FAILURE; }
+    if (err == ASKPASS_TTY_VERIFY_DOESNT_MATCH) { std::cout << "kdbxmerge: the two passwords do not match\n"; return EXIT_FAILURE; }
+  }
+  
   password.setPassword(pass);
   key.addKey(password);
   burn(pass,strlen(pass));
@@ -119,7 +134,7 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
     }
   
   delete output;
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 
