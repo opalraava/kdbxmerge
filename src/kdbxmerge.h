@@ -6,8 +6,7 @@
 
 struct kdbxmerge_options
 {
-  /* as of now, we don't have options, and we don't want an empty struct */
-  int dummy;
+  int verbose;
 };
 
 int main_do_merge(std::vector<std::string> input_filenames, std::string output_filename,
