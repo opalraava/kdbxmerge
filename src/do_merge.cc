@@ -123,6 +123,11 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
 }
 
 
+/*
+ * Static functions
+ */
+
+
 static char* askpass(const std::string& prompt, bool verify, int timeout)
 {
   char* key = NULL;
