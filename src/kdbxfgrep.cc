@@ -69,8 +69,11 @@ usage()
 
   printf("\n");
   printf("This program allows you to search for kdbx entries on the commandline.\n");
-  printf("the [-P] and [-U] options can be used to stuff a password into another commandline.\n");
+  printf("the [-P] and [-U] options can be used to stuff a password or url into another commandline.\n");
   printf("for example: mysqladmin processlist -u root -p$(kdbxfgrep -P ~/sqlpassdb.kdbx root)\n");
+  printf("\n");
+  printf("SECURITY WARNING: Know what you're doing, printing passwords to stdout can be dangerous.\n");
+  printf("Problems can happen if you're loging your console output with 'script', for example.\n");
   printf("\n");
 }
 
