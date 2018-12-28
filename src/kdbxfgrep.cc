@@ -59,7 +59,7 @@ usage()
 {
   printf("kdbxfgrep [OPTION]... FILE SEARCHTERM\n\n");
 
-  printf("  -i, --case-sensitive    perform a case sensitve search (default is case insensitve\n");
+  printf("  -i, --case-sensitive    perform a case sensitve search (default is case insensitve)\n");
   printf("  -p, --include-password  print the password in the list of results\n");
   printf("  -u, --include-url       print the URL, if any, in the list of results\n");
   printf("  -P, --password if one unique entry is found, print *only* the password to stdout\n");
