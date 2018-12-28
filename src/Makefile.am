@@ -1,11 +1,9 @@
 EXTRA_DIST = config-keepassx.h  config-keepassx.h.cmake streams/QtIOCompressor
 
-
 AM_CPPFLAGS = ${QT_CXXFLAGS} ${GCRYPT_CFLAGS}
 AM_LDFLAGS  = ${QT_LIBS} ${GCRYPT_LIBS}
 
 AUTOMAKE_OPTIONS=subdir-objects
-
 
 keepassx_sources = \
 core/AutoTypeAssociations.cpp \
@@ -101,7 +99,6 @@ streams/SymmetricCipherStream.h \
 streams/qtiocompressor.cpp \
 streams/qtiocompressor.h
 
-
 moc_sources = \
 streams/HashedBlockStream_moc.cpp \
 streams/LayeredStream_moc.cpp \
@@ -123,22 +120,6 @@ BUILT_SOURCES = ${moc_sources}
 
 clean-local :
 	-rm -f ${moc_sources}
-
-
-noinst_LIBRARIES = libkeepassxio.a
-libkeepassxio_a_SOURCES = ${keepassx_sources} ${moc_sources}
-
-
-
-bin_PROGRAMS = kdbxmerge
-kdbxmerge_SOURCES = kdbxmerge.h kdbxmerge.cc askpass_tty.h askpass_tty.c
-kdbxmerge_LDADD = libkeepassxio.a
-
-noinst_PROGRAMS = kdbxextract
-kdbxextract_SOURCES = kdbx-extract.cpp
-kdbxextract_LDADD = libkeepassxio.a
-
-
 
 streams/HashedBlockStream_moc.cpp : streams/HashedBlockStream.h
 	moc $< -o $@
@@ -170,4 +151,19 @@ core/Group_moc.cpp : core/Group.h
 	moc $< -o $@
 core/EntryAttributes_moc.cpp : core/EntryAttributes.h
 	moc $< -o $@
+
+noinst_LIBRARIES = libkeepassxio.a
+libkeepassxio_a_SOURCES = ${keepassx_sources} ${moc_sources}
+
+noinst_PROGRAMS = kdbxextract
+kdbxextract_SOURCES = kdbx-extract.cpp
+kdbxextract_LDADD = libkeepassxio.a
+
+bin_PROGRAMS = kdbxmerge kdbxfgrep
+kdbxmerge_SOURCES = kdbxmerge.h kdbxmerge.cc askpass_tty.h askpass_tty.c
+kdbxmerge_LDADD = libkeepassxio.a
+kdbxfgrep_SOURCES = kdbxfgrep.h kdbxfgrep.cc askpass_tty.h askpass_tty.c
+kdbxfgrep_LDADD = libkeepassxio.a
+
+
 

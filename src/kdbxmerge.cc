@@ -29,6 +29,12 @@
 #include "keys/PasswordKey.h"
 
 
+
+static int main_do_merge(std::vector<std::string> input_filenames, std::string output_filename,
+			 struct kdbxmerge_options *x);
+
+
+
 static struct option const long_options[] =
   {
     {"verbose",no_argument,NULL,'v'},
@@ -43,9 +49,6 @@ kdbxmerge_options_init(struct kdbxmerge_options *x)
   x->verbose = 0;
 }
 
-
-static int main_do_merge(std::vector<std::string> input_filenames, std::string output_filename,
-			 struct kdbxmerge_options *x);
 
 void
 usage()
@@ -94,7 +97,7 @@ main(int argc, char* argv[])
 	   qPrintable(Crypto::errorString()));
   }
 
-  while ((c = getopt_long(argc,argv,"vhV",long_options, NULL)) != -1)
+  while ((c = getopt_long(argc,argv,"v",long_options, NULL)) != -1)
     {
       switch (c)
 	{
