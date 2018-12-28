@@ -8,9 +8,13 @@ AC_PROG_RANLIB
 AC_PROG_CC
 AC_PROG_CXX
 
-AX_HAVE_QT
 AX_CHECK_ZLIB
 AX_LIB_GCRYPT([yes])
+
+AX_HAVE_QT
+if test "x$have_qt" == "xno"; then
+  AC_MSG_ERROR([Qt5 not detected])
+fi
 
 AC_CONFIG_FILES(Makefile src/Makefile)
 AC_OUTPUT
