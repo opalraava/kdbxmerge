@@ -1,4 +1,4 @@
-AC_INIT([kdbxmerge], [0.1.0], [opalraava@riseup.net], [], [https://github.com/jdoe/kbdxmerge/])
+AC_INIT([kdbxmerge], [0.1.0], [opalraava@riseup.net], [], [https://github.com/opalraava/kbdxmerge/])
 AC_CONFIG_SRCDIR(src/kdbxmerge.cc)
 AC_PREREQ(2.59)
 AM_INIT_AUTOMAKE
