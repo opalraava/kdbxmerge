@@ -14,7 +14,7 @@ Building under fedora
 ---------------------
 You need to install:
 ```
-dnf -y install qt5-devel libgcrypt-devel zlib-devel
+sudo dnf -y install qt5-devel libgcrypt-devel zlib-devel
 ```
 Fix the qt5 tool filenames:
 ```
