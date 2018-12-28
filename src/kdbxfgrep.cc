@@ -235,10 +235,8 @@ static int main_do_kdbxfgrep(std::string db_name, std::string search_string,
   return retval;
 }
 
-static inline std::string make_str(QString str)
-{
-  QByteArray ba = str.toLocal8Bit();
-  return std::string(ba.data());
+static inline std::string make_str(QString str) {
+  return std::string(str.toLocal8Bit().data());
 }
 
 static int kdbxfgrep(Database* db, const char* search_string, struct kdbxfgrep_options *x)
