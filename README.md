@@ -14,9 +14,9 @@ Building under fedora
 ---------------------
 You need to install:
 ```
-dnf -y install qt5-devel
+dnf -y install qt5-devel libgcrypt-devel zlib-devel
 ```
-Fix the tool filenames:
+Fix the qt5 tool filenames:
 ```
 cd /usr/bin
 sudo ln -s qmake-qt5 qmake
@@ -25,4 +25,10 @@ sudo ln -s uic-qt5 uic
 sudo ln -s lrelease-qt5 lrelease
 sudo ln -s lupdate-qt5 lupdate
 cd -
+```
+Then we proceed as normal:
+```
+./configure
+make
+sudo make install
 ```
