@@ -9,3 +9,20 @@ This is what I wanted to do for a while now, to make commandline programs that m
 So what this repo provides is:
 * a static library libkeepassio.a, that contains all the Keepassx2 database stuff.
 * and a few commandline tools that work with these .kdbx files.
+
+Building under fedora
+---------------------
+You need to install:
+```
+dnf -y install qt5-devel
+```
+Fix the tool filenames:
+```
+cd /usr/bin
+sudo ln -s qmake-qt5 qmake
+sudo ln -s moc-qt5 moc
+sudo ln -s uic-qt5 uic
+sudo ln -s lrelease-qt5 lrelease
+sudo ln -s lupdate-qt5 lupdate
+cd -
+```
