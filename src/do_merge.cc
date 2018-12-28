@@ -14,10 +14,26 @@
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 
-static char* askpass(const std::string& prompt, bool verify = false, int timeout = 0);
+#include "core/Group.h"
+#include "core/Entry.h"
+#include "core/Uuid.h"
+
+
+
+// this one performs the actual messy merging process
 static void merge(Database* output, Database* db, const char* groupname, struct kdbxmerge_options *x);
 
-
+// convienience helper for askpass_tty()
+static inline char* askpass(const std::string& prompt, bool verify = false, int timeout = 0)
+{
+  char* key = NULL;
+  
+  int err = askpass_tty(prompt.c_str(), &key, timeout, verify?1:0);
+  if (err != 0)
+    throw err;
+  
+  return key;
+}
 
 
 /***
@@ -26,6 +42,7 @@ static void merge(Database* output, Database* db, const char* groupname, struct 
    At entry, we know the filenames and options, and when this function returns, main() returns
    with it's return value.
 
+   This function calls merge() to actually perform the messy merging process.
 */
 
 int main_do_merge(std::vector<std::string> input_filenames, std::string output_filename,
@@ -104,7 +121,9 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
     delete output;
     if (err < 0) { std::cout << "kdbxmerge: out of memory\n"; return EXIT_FAILURE; }
     if (err == 2) { std::cout << "kdbxmerge: i/o error with tty\n"; return EXIT_FAILURE; }
-    if (err == ASKPASS_TTY_VERIFY_DOESNT_MATCH) { std::cout << "kdbxmerge: the two passwords do not match\n"; return EXIT_FAILURE; }
+    if (err == ASKPASS_TTY_VERIFY_DOESNT_MATCH) {
+      std::cout << "kdbxmerge: the two passwords do not match\n"; return EXIT_FAILURE;
+    }
   }
   
   password.setPassword(pass);
@@ -139,27 +158,15 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
 
 
 /*
- * Static functions
+ * Actual merge process
  */
-
-
-static char* askpass(const std::string& prompt, bool verify, int timeout)
-{
-  char* key = NULL;
-  
-  int err = askpass_tty(prompt.c_str(), &key, timeout, verify?1:0);
-  if (err != 0)
-    throw err;
-  
-  return key;
-}
-
 
 static void merge(Database* output, Database* db, const char* groupname, struct kdbxmerge_options *x)
 {
-  (void)output;
-  (void)db;
-  (void)groupname;
+  Group* g = db->rootGroup()->clone();
+  g->setName(groupname);
+  g->setParent(output->rootGroup());
+  
   (void)x;
 }
 

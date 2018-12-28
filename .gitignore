@@ -43,3 +43,4 @@ src/streams/LayeredStream_moc.cpp
 src/streams/StoreDataStream_moc.cpp
 src/streams/SymmetricCipherStream_moc.cpp
 src/streams/qtiocompressor_moc.cpp
+src/*.kdbx
