@@ -261,7 +261,10 @@ static int kdbxfgrep(Database* db, const char* search_string, struct kdbxfgrep_o
       if (searchResult.count() == 1)
 	{
 	  Entry* entry = *(searchResult.begin());
-	  std::cout << make_str(entry->password()) << std::endl;
+	  std::string s = make_str(entry->password());
+	  
+	  if (!s.empty())
+	    std::cout << s << std::endl;
 	}
     }
   else if (x->on_unique_print_url)
@@ -269,7 +272,10 @@ static int kdbxfgrep(Database* db, const char* search_string, struct kdbxfgrep_o
       if (searchResult.count() == 1)
 	{
 	  Entry* entry = *(searchResult.begin());
-	  std::cout << make_str(entry->url()) << std::endl;
+	  std::string s = make_str(entry->url());
+
+	  if (!s.empty())
+	    std::cout << s << std::endl;
 	}
     }
   else
