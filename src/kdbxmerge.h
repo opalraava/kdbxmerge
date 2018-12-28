@@ -3,9 +3,6 @@
 
 #include <climits>
 
-#include <vector>
-#include <string>
-
 struct kdbxmerge_options
 {
   int verbose;
@@ -27,8 +24,4 @@ enum
 #define VERSION_OPTION_DESCRIPTION \
   "      --version  output version information and exit\n"
 
-int main_do_merge(std::vector<std::string> input_filenames, std::string output_filename,
-		  struct kdbxmerge_options *x);
-
 #endif
-
