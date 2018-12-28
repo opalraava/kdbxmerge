@@ -16,8 +16,8 @@
 static struct option const long_options[] =
   {
     {"verbose",no_argument,NULL,'v'},
-    {"help",no_argument,NULL,'h'},
-    {"version",no_argument,NULL, 'V'},
+    {GETOPT_HELP_OPTION_DECL},
+    {GETOPT_VERSION_OPTION_DECL},
     {NULL,0,NULL,0}
   };
 
@@ -33,8 +33,8 @@ usage()
   printf("kdbxmerge [OPTION]... SOURCE... DEST\n\n");
 
   printf("  -v, --verbose  explain what's being done\n");
-  printf("  -h, --help     display this help and exit\n");
-  printf("  -V, --version  output version information and exit\n");
+  printf(HELP_OPTION_DESCRIPTION);
+  printf(VERSION_OPTION_DESCRIPTION);
 
   printf("\n");
   printf("Use this program to merge several KeePass .kdbx databases into a new,\n");
@@ -82,12 +82,12 @@ main(int argc, char* argv[])
 	  x.verbose = 1;
 	  break;
 	  
-	case 'V':
-	  version();
+	case GETOPT_HELP_CHAR:
+	  usage();
 	  return EXIT_SUCCESS;
 	  
-	case 'h':
-	  usage();
+	case GETOPT_VERSION_CHAR:
+	  version();
 	  return EXIT_SUCCESS;
 	  
 	default:

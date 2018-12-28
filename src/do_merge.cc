@@ -158,7 +158,7 @@ int main_do_merge(std::vector<std::string> input_filenames, std::string output_f
 
 
 /*
- * Actual merge process
+ * Actual merge process, all done by Group::clone()
  */
 
 static void merge(Database* output, Database* db, const char* groupname, struct kdbxmerge_options *x)
