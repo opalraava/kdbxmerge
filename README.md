@@ -32,3 +32,9 @@ Then we proceed as normal:
 make
 sudo make install
 ```
+Building under debian
+---------------------
+Install the dependencies:
+```
+sudo apt-get -y install zlib1g-dev libgcrypt-dev qt-sdk
+```
