@@ -158,7 +158,7 @@ main(int argc, char* argv[])
   if (x.on_unique_print_password)
     {
       if (x.on_unique_print_url || x.include_password || x.include_url) {
-	printf("kdbxfgrp: incompatible commandline options\n");
+	printf("kdbxfgrep: incompatible commandline options\n");
 	printf("Try 'kdbxfgrep --help' for more information.\n");
 	return EXIT_FAILURE;
       }
@@ -166,7 +166,7 @@ main(int argc, char* argv[])
   if (x.on_unique_print_url)
     {
       if (x.on_unique_print_password || x.include_password || x.include_url) {
-	printf("kdbxfgrp: incompatible commandline options\n");
+	printf("kdbxfgrep: incompatible commandline options\n");
 	printf("Try 'kdbxfgrep --help' for more information.\n");
 	return EXIT_FAILURE;
       }
