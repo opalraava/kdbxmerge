@@ -73,7 +73,7 @@ usage()
   printf("for example: mysqladmin processlist -u root -p$(kdbxfgrep -P ~/sqlpassdb.kdbx root)\n");
   printf("\n");
   printf("SECURITY WARNING: Know what you're doing, printing passwords to stdout can be dangerous.\n");
-  printf("Problems can happen if you're loging your console output with 'script', for example.\n");
+  printf("Problems can happen if you're logging your console output with 'script', for example.\n");
   printf("\n");
 }
 
